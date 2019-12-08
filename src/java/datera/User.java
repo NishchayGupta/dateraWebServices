@@ -76,12 +76,14 @@ public class User {
         ResultSet rs = null;
         JSONObject registerObj = new JSONObject();
         user = new User();
-        
                 try {
                     String sql;
+                    System.out.println("Hello1");
                     sql = "insert into\n" +
                            "USERDATING (userid, fname, lname, phone, address, email, dateofbirth, gender, status, password, roles, subscriptiontype) \n" +
-                           "values (user_id_seq.nextval, ?, ?, ?, ?, '?, TO_DATE(?, 'dd/mm/yyyy'), ?, ?, ?, ?, ?)";
+                           "values (user_id_seq.nextval, ?, ?, ?, ?, ?, TO_DATE(?, 'dd/mm/yyyy'), ?, ?, ?, ?, ?)";
+                    
+                    //http://www.localhost:8080/DateraWeb/datera/user/registerUser&Pratz&Agarwal&5146667777&Montreal&emailTest&16%4010%402001&M&Active&12345678&User&Free
                     stm = con.prepareStatement(sql);
                     stm.setString(1, fname);
                     stm.setString(2, lname);
@@ -103,10 +105,12 @@ public class User {
                         mainObj.accumulate("Timestamp", timeStamp());
                         mainObj.accumulate("message", "User has been successfully registered");
                     }
+                    System.out.println("Hello1");
                 } catch (SQLException ex) {
+                    mainObj = new JSONObject();
                     mainObj.accumulate("Status", "FAIL");
                     mainObj.accumulate("Timestamp", timeStamp());
-                    mainObj.accumulate("message", "Error registering");
+                    mainObj.accumulate("message", ex.getMessage());
                     Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 finally{ 

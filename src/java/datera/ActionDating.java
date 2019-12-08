@@ -100,7 +100,7 @@ public class ActionDating {
                     }
                     listObj.accumulate("Status", "OK");
                     listObj.accumulate("Timestamp", timeStamp());
-                    listObj.accumulate("Chats", actionDatingArr);
+                    listObj.accumulate("Actions", actionDatingArr);
                 } catch (SQLException ex) {
                     System.out.println("Inside catch");
                     listObj.accumulate("Status", "FAIL");

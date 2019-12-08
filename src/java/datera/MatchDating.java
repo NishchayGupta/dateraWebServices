@@ -97,7 +97,7 @@ public class MatchDating {
                     }
                     listObj.accumulate("Status", "OK");
                     listObj.accumulate("Timestamp", timeStamp());
-                    listObj.accumulate("Chats", matchDatingArr);
+                    listObj.accumulate("Match", matchDatingArr);
                 } catch (SQLException ex) {
                     System.out.println("Inside catch");
                     listObj.accumulate("Status", "FAIL");

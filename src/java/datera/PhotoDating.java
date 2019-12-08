@@ -98,7 +98,7 @@ public class PhotoDating {
                     }
                     listObj.accumulate("Status", "OK");
                     listObj.accumulate("Timestamp", timeStamp());
-                    listObj.accumulate("Chats", photoDatingArr);
+                    listObj.accumulate("Photos", photoDatingArr);
                 } catch (SQLException ex) {
                     System.out.println("Inside catch");
                     listObj.accumulate("Status", "FAIL");
