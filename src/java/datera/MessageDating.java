@@ -243,6 +243,7 @@ public class MessageDating {
                          mainObj = new JSONObject();
                          messageId = rs.getInt(3);
                          senderUsrName = rs.getString(1);
+                         System.out.println("Testing: " + rs.getString(1));
                          receiveUsrName = rs.getString(2);
                          chat = rs.getString(4);
                         
@@ -318,19 +319,20 @@ public class MessageDating {
                     while(rs.next())
                     {
                          mainObj = new JSONObject();
-                         messageId = rs.getInt(1);
-                         senderUsrName = rs.getString(2);
-                         receiveUsrId = rs.getInt(3);
+                         messageId = rs.getInt(3);
+                         senderUsrName = rs.getString(1);
+                         receiveUsrName = rs.getString(2);
                         
                          mainObj.accumulate("messageId", messageId);
-                         mainObj.accumulate("senderUserId", senderUsrId);
-                         mainObj.accumulate("receiveUserId", receiveUsrId);
+                         mainObj.accumulate("senderUserName", senderUsrName);
+                         mainObj.accumulate("receiveUserName", receiveUsrName);
                     }
                     listObj.accumulate("Status", "OK");
                     listObj.accumulate("Timestamp", timeStamp());
                     listObj.accumulate("messageId", mainObj.getInt("messageId"));
-                    listObj.accumulate("senderUserId", mainObj.getInt("senderUserId"));
-                    listObj.accumulate("receiveUserId", mainObj.getInt("receiveUserId"));
+                    listObj.accumulate("senderUserName", mainObj.getString("senderUserName"));
+                    listObj.accumulate("receiveUserName", mainObj.getString("receiveUserName"));
+                    //listObj.accumulate("messageReceiver", mainObj);
                 } catch (SQLException ex) {
                     listObj.accumulate("Status", "FAIL");
                     listObj.accumulate("Timestamp", timeStamp());
@@ -338,7 +340,7 @@ public class MessageDating {
                     Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 finally{
-                        mainObj.clear();
+                        
                         if (rs != null) {
                             try {
                                   rs.close();

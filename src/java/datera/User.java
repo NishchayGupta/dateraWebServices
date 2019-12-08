@@ -56,6 +56,76 @@ public class User {
     }
     
     /**
+     * Login
+     */
+    @GET
+    @Path("/loginUser&{email}&{password}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getMatchDate(@PathParam("email") String theEmail,
+                                  @PathParam("password") String thePassword) {
+        ResultSet rs = null;
+        JSONObject listObj = new JSONObject();
+        user = new User();
+        
+                try {
+                    String sql;
+                    userRegisterArr = new JSONArray();
+                    sql = "select userId FROM USERDATING where email=? and password=?";
+                    stm = con.prepareStatement(sql);
+                    System.out.println("Inside try block");
+                    stm.setString(1, theEmail);
+                    stm.setString(2, thePassword);
+                    rs = stm.executeQuery();
+                    while(rs.next())
+                    {
+                         mainObj = new JSONObject();
+                         userId = rs.getInt(1);
+                        
+                         mainObj.accumulate("userId", userId);
+                         
+                         System.out.println("Inside while");
+                    }
+                    listObj.accumulate("Status", "OK");
+                    listObj.accumulate("Timestamp", timeStamp());
+                    if(mainObj.getString("userId")!=null)
+                    {
+                        listObj.accumulate("Message", "Login Successful");
+                    }
+                } catch (SQLException ex) {
+                    System.out.println("Inside catch");
+                    listObj.accumulate("Status", "FAIL");
+                    listObj.accumulate("Timestamp", timeStamp());
+                    listObj.accumulate("message", "Error in login");
+                    Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                finally{
+                        System.out.println("Inside finally");
+                        if (rs != null) {
+                            try {
+                                  rs.close();
+                                } catch (SQLException e) {
+                            /* ignored */
+                                }
+                            }
+                        if (stm != null) {
+                            try {
+                                    stm.close();
+                                } catch (SQLException e) {
+                            /* ignored */
+                                }
+                            }
+                        if (con != null) {
+                            try {
+                                    con.close();
+                                } catch (SQLException e) {
+                            /* ignored */
+                                }
+                            }
+                }
+        return listObj.toString();
+    }
+    
+    /**
      * Register User - Registers user specifying all its details 
      */
     @GET
